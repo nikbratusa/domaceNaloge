@@ -147,7 +147,28 @@ class HierarchicalClustering:
             self.clusters.remove(closestClusters[0])
             self.clusters.remove(closestClusters[1])
             self.clusters.append(newCluster)
-        #print(self.clusters)
+
+        print(self.clusters)
+
+
+        allCountriesVoting = list(self.data.keys())
+        for country in allCountriesVoting:
+            noVotes = []
+            votes = []
+            c = list(self.data[country])
+            #print("---------------------------------")
+            #print(country + ":")
+            for i in range(len(c)):
+                if c[i] == "NoVote" or float(c[i]) == 0.0:
+                    if allCountriesVoting[i] not in noVotes:
+                        noVotes.append(allCountriesVoting[i])
+                else:
+                    if float(c[i]) > 6:
+                        if allCountriesVoting[i] not in votes:
+                            votes.append(allCountriesVoting[i])
+            #print(noVotes)
+            #print(votes)
+
 
 
     def plot_tree(self):
@@ -155,26 +176,7 @@ class HierarchicalClustering:
         Use cluster information to plot an ASCII representation of the cluster
         tree.
         """
-        self.izpisi(self.clusters, 0)
-
-    def izpisi(self, l, tab):
-        if isinstance(l[0], list):
-            self.izpisi(l[0], tab + 1)
-        else:
-            while tab != 0:
-                print("\t", end='')
-                tab = tab - 1
-            print("---- " + l[0])
-            return
-        if len(l) > 1:
-            stevec = tab
-            while stevec != 0:
-                print("\t", end='')
-                stevec = stevec - 1
-            print("----|")
-            return self.izpisi(l[1:], tab)
-        else:
-            return
+        pass
 
 if __name__ == "__main__":
     DATA_FILE = "eurovision-final.csv"
